@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public record StackoverflowLinkParser() {
+public class StackoverflowLinkParser {
 
     public static Map<String, Long> getId(String url) {
         if (!hasId(url)) {

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public record GithubLinkParser() {
+public class GithubLinkParser {
     public static Map<String, String> getUsernameAndRepo(String url) {
         if (!hasUsernameAndRepo(url)) {
             return null;
