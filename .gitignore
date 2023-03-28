@@ -1,4 +1,4 @@
 /.idea
 */target/*
-*/archetype-resources/*
-*/META-INF/*
+archetype-resources/
+META-INF/

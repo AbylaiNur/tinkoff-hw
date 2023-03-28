@@ -33,7 +33,8 @@ public class GlobalLinkParser {
                 LinkParser parser = (LinkParser) clazz.getDeclaredConstructor().newInstance();
                 parsers.add(parser);
             } catch (Exception e) {
-                // При ошибке получения instance продолжаем итерировать по классам
+                System.out.println(e.getMessage());
+                System.out.println(list.getClass().getName() + " parser was skipped due to the error.");
             }
         }
 
