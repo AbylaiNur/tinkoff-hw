@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GithubLinkParser {
-    public static Map<String, String> getUsernameAndRepo(String url) {
-        if (!hasUsernameAndRepo(url)) {
+public class GithubLinkParser implements LinkParser {
+
+    @Override
+    public Map<String, String> parse(String url) {
+        if (!canParse(url)) {
             return null;
         }
         Map<String, String> map = new HashMap<>();
@@ -18,7 +20,8 @@ public class GithubLinkParser {
         return map;
     }
 
-    public static Boolean hasUsernameAndRepo(String url) {
+    @Override
+    public Boolean canParse(String url) {
         List<String> invalidPathNames = List.of(
                 "about", "blog", "codespaces", "collections", "contact",
                 "customer-stories", "events", "explore", "features", "issues",
@@ -27,13 +30,13 @@ public class GithubLinkParser {
                 "sponsors", "stars", "topics", "trending", "wiki"
         );
 
-        Validator link = Validator.link(
+        ValidatorChainBuilder validatorChainBuilder = new ValidatorChainBuilder(
                 new ValidLinkValidator(url),
                 new DomainNameValidator(url, "github.com"),
                 new MinPathSizeValidator(url, 2),
                 new ExcludeSegmentPathNamesValidator(url, 0, invalidPathNames)
         );
-
-        return link.validate();
+        Validator validator = validatorChainBuilder.toValidator();
+        return validator.validate();
     }
 }

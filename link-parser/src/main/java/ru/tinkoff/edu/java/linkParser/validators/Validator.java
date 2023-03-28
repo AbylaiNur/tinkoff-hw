@@ -1,16 +1,7 @@
 package ru.tinkoff.edu.java.linkParser.validators;
 
 public abstract class Validator {
-    private Validator next;
-
-    public static Validator link(Validator first, Validator... chain) {
-        Validator head = first;
-        for (Validator nextInChain : chain) {
-            head.next = nextInChain;
-            head = nextInChain;
-        }
-        return first;
-    }
+    public Validator next;
 
     public abstract Boolean validate();
 

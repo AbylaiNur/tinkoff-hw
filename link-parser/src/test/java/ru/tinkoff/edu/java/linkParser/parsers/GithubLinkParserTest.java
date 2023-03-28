@@ -12,22 +12,22 @@ public class GithubLinkParserTest {
 
     @Test
     void hasUsernameAndRepo1() {
-        assertEquals(false, GithubLinkParser.hasUsernameAndRepo("https://github.com/settings/profile"));
+        assertEquals(false, new GithubLinkParser().canParse("https://github.com/settings/profile"));
     }
 
     @Test
     void hasUsernameAndRepo2() {
-        assertEquals(false, GithubLinkParser.hasUsernameAndRepo("https://github.com"));
+        assertEquals(false, new GithubLinkParser().canParse("https://github.com"));
     }
 
     @Test
     void hasUsernameAndRepo3() {
-        assertEquals(true, GithubLinkParser.hasUsernameAndRepo("https://github.com/AbylaiNur/tinkoff-hw"));
+        assertEquals(true, new GithubLinkParser().canParse("https://github.com/AbylaiNur/tinkoff-hw"));
     }
 
     @Test
     void hasUsernameAndRepo4() {
-        assertEquals(true, GithubLinkParser.hasUsernameAndRepo("https://github.com/AbylaiNur/tinkoff-hw/actions/new"));
+        assertEquals(true, new GithubLinkParser().canParse("https://github.com/AbylaiNur/tinkoff-hw/actions/new"));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class GithubLinkParserTest {
         Map<String, String> map = new HashMap<String, String>();
         map.put("username", "AbylaiNur");
         map.put("repository", "tinkoff-hw");
-        assertEquals(map, GithubLinkParser.getUsernameAndRepo("https://github.com/AbylaiNur/tinkoff-hw"));
+        assertEquals(map, new GithubLinkParser().parse("https://github.com/AbylaiNur/tinkoff-hw"));
     }
 
     @Test
@@ -43,16 +43,16 @@ public class GithubLinkParserTest {
         Map<String, String> map = new HashMap<String, String>();
         map.put("username", "AbylaiNur");
         map.put("repository", "tinkoff-hw");
-        assertEquals(map, GithubLinkParser.getUsernameAndRepo("https://github.com/AbylaiNur/tinkoff-hw/actions/new"));
+        assertEquals(map, new GithubLinkParser().parse("https://github.com/AbylaiNur/tinkoff-hw/actions/new"));
     }
 
     @Test
     void getUsernameAndRepo3() {
-        assertNull(GithubLinkParser.getUsernameAndRepo("https://git.com/AbylaiNur/tinkoff-hw/actions/new"));
+        assertNull(new GithubLinkParser().parse("https://git.com/AbylaiNur/tinkoff-hw/actions/new"));
     }
 
     @Test
     void getUsernameAndRepo4() {
-        assertNull(GithubLinkParser.getUsernameAndRepo("https://github.com/settings/profile"));
+        assertNull(new GithubLinkParser().parse("https://github.com/settings/profile"));
     }
 }

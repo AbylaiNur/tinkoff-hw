@@ -12,44 +12,44 @@ public class StackoverflowLinkParserTest {
 
     @Test
     void hasId1() {
-        assertEquals(true, StackoverflowLinkParser.hasId(
+        assertEquals(true, new StackoverflowLinkParser().canParse(
                 "https://stackoverflow.com/questions/69144581/why-git-merge-remove-existing-line-of-code"
         ));
     }
 
     @Test
     void hasId2() {
-        assertEquals(false, StackoverflowLinkParser.hasId(
+        assertEquals(false, new StackoverflowLinkParser().canParse(
                 "https://stackoverflow.com/uestions/69144581/why-git-merge-remove-existing-line-of-code"
         ));
     }
 
     @Test
     void hasId3() {
-        assertEquals(false, StackoverflowLinkParser.hasId(
+        assertEquals(false, new StackoverflowLinkParser().canParse(
                 "https://stackoverflow.com/questions/69aaa581/why-git-merge-remove-existing-line-of-code"
         ));
     }
 
     @Test
     void hasId4() {
-        assertEquals(false, StackoverflowLinkParser.hasId(
+        assertEquals(false, new StackoverflowLinkParser().canParse(
                 "https://stackoverflow.com/questions/-69581/why-git-merge-remove-existing-line-of-code"
         ));
     }
 
     @Test
     void hasId5() {
-        assertEquals(false, StackoverflowLinkParser.hasId(
+        assertEquals(false, new StackoverflowLinkParser().canParse(
                 "https://stackoverflow.com/questions//why-git-merge-remove-existing-line-of-code"
         ));
     }
 
     @Test
     void getId() {
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("id", 100l);
-        assertEquals(map, StackoverflowLinkParser.getId(
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "100");
+        assertEquals(map, new StackoverflowLinkParser().parse(
                 "https://stackoverflow.com/questions/100/why-git-merge-remove-existing-line-of-code"
         ));
     }

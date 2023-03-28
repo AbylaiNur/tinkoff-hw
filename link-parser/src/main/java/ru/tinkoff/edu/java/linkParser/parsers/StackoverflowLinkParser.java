@@ -7,26 +7,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StackoverflowLinkParser {
-
-    public static Map<String, Long> getId(String url) {
-        if (!hasId(url)) {
+public class StackoverflowLinkParser implements LinkParser {
+    @Override
+    public Map<String, String> parse(String url) {
+        if (!canParse(url)) {
             return null;
         }
-        Map<String, Long> map = new HashMap<>();
-        map.put("id", Long.valueOf(LinkHelper.getPathSegments(url).get(1)));
+        Map<String, String> map = new HashMap<>();
+        map.put("id", LinkHelper.getPathSegments(url).get(1));
         return map;
     }
 
-    public static Boolean hasId(String url) {
-        Validator link = Validator.link(
+    @Override
+    public Boolean canParse(String url) {
+        ValidatorChainBuilder validatorChainBuilder = new ValidatorChainBuilder(
                 new ValidLinkValidator(url),
                 new DomainNameValidator(url, "stackoverflow.com"),
                 new MinPathSizeValidator(url, 2),
                 new IncludeSegmentPathNameValidator(url, 0, "questions"),
                 new IntegerSegmentPathValidator(url, 1, 0l, Long.MAX_VALUE)
         );
-
-        return link.validate();
+        Validator validator = validatorChainBuilder.toValidator();
+        return validator.validate();
     }
 }
