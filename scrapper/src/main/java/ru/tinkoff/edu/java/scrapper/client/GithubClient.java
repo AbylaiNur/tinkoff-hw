@@ -1,27 +1,39 @@
 package ru.tinkoff.edu.java.scrapper.client;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.tinkoff.edu.java.scrapper.client.classes.GetGithubRepositoryDataResponse;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import ru.tinkoff.edu.java.scrapper.client.dto.GithubApiRepositoryDTO;
+import ru.tinkoff.edu.java.scrapper.client.dto.response.GetGithubRepositoryDataResponse;
 
-import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class GithubClient {
-    private final WebClient webClient;
+    private final WebClient githubWebClient;
 
-    public GithubClient(@Qualifier("githubWebClient") WebClient webClient) {
-        this.webClient = webClient;
-    }
+    public GetGithubRepositoryDataResponse getGithubRepositoryData(String username, String repository) {
+        try {
+            GithubApiRepositoryDTO data = this.githubWebClient
+                    .get()
+                    .uri("/repos/{username}/{repository}", username, repository)
+                    .retrieve().bodyToMono(GithubApiRepositoryDTO.class)
+                    .block();
 
-    public GetGithubRepositoryDataResponse getGithubRepositoryData(Map<String, String> map) {
-        String username = map.get("username");
-        String repository = map.get("repository");
-        return this.webClient
-                .get()
-                .uri("/{username}/{repository}", username, repository)
-                .retrieve().bodyToMono(GetGithubRepositoryDataResponse.class)
-                .block();
+            GetGithubRepositoryDataResponse newData = new GetGithubRepositoryDataResponse(
+                    data.id(),
+                    data.name(),
+                    data.fullName(),
+                    data.description(),
+                    data.updatedAt(),
+                    data.pushedAt()
+            );
+
+            return newData;
+        } catch (WebClientResponseException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

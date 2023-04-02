@@ -14,5 +14,11 @@ public class Controller {
 
     @PostMapping
     public void linkUpdate(@Valid @RequestBody LinkUpdateRequest request) {
+        System.out.println(request.id());
+        System.out.println(request.url());
+        System.out.println(request.description());
+        for (Long tgChatId : request.tgChatIds()) {
+            System.out.println(tgChatId);
+        }
     }
 }

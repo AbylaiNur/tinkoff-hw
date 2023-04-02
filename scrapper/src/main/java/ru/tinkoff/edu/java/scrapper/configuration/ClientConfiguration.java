@@ -9,10 +9,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class ClientConfiguration {
 
-    @Value("${base-url.stackoverflow:stackoverflow.com}")
+    @Value("${base-url.stackoverflow:https://api.stackexchange.com/2.3}")
     private String stackoverflowUrl;
 
-    @Value("${base-url.github:github.com}")
+    @Value("${base-url.github:https://api.github.com}")
     private String githubUrl;
 
     @Bean("stackoverflowWebClient")
@@ -22,7 +22,7 @@ public class ClientConfiguration {
                 .build();
     }
 
-    @Bean
+    @Bean("githubWebClient")
     public WebClient githubWebClient() {
         return WebClient.builder()
                 .baseUrl(githubUrl)

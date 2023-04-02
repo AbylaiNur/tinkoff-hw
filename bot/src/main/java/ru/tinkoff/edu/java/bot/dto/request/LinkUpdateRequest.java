@@ -10,5 +10,6 @@ public record LinkUpdateRequest(
         @NotNull Long id,
         @NotNull String url,
         String description,
-        @NotNull List<Long> tgChatIds) {
+        @NotNull List<Long> tgChatIds
+) {
 }

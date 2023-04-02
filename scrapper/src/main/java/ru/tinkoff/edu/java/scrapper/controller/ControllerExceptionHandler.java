@@ -1,6 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -14,17 +16,16 @@ import java.util.List;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    public ResponseEntity<ApiErrorResponse> handleMethodArgumentTypeMismatchException(Exception e) {
-        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(
+    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
+    public ResponseEntity<ApiErrorResponse> handleException(Exception e) {
+        return ResponseEntity.badRequest().body(new ApiErrorResponse(
                 "Некорректные параметры запроса",
                 "400",
-                "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
+                e.getClass().getName(),
                 e.getMessage(),
                 Arrays.stream(e.getStackTrace())
                         .map(StackTraceElement::toString)
-                        .toList()
+                        .toList())
         );
-        return ResponseEntity.badRequest().body(apiErrorResponse);
     }
 }
