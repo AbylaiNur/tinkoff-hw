@@ -9,6 +9,7 @@
     <artifactId>bot</artifactId>
     <name>Archetype - bot</name>
     <url>http://maven.apache.org</url>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
