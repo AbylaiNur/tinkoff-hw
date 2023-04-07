@@ -1,16 +1,22 @@
 package ru.tinkoff.edu.java.bot.command;
 
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.tinkoff.edu.java.bot.UserMessageProcessor;
+import ru.tinkoff.edu.java.bot.dao.UserDao;
 
+import java.util.List;
+
+@Component
 public class HelpCommand extends Command {
 
-    public HelpCommand() {
+    private UserDao userDao;
+    private List<Command> commands;
+
+    public HelpCommand(UserDao userDao, List<Command> commands) {
         super("/help", "list all of the commands");
+        this.commands = commands;
     }
 
     @Override
@@ -20,7 +26,7 @@ public class HelpCommand extends Command {
         sendMessage.setChatId(message.getChatId().toString());
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (Command command : UserMessageProcessor.commands) {
+        for (Command command : commands) {
             stringBuilder.append(command.getCommand() + " - " + command.getDescription() + "\n");
         }
 
@@ -29,5 +35,4 @@ public class HelpCommand extends Command {
         sendMessage.setText(str);
         return sendMessage;
     }
-
 }

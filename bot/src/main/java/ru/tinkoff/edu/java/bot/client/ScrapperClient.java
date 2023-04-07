@@ -26,7 +26,6 @@ public class ScrapperClient {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public void addLink(Long id, AddLinkRequest request) {

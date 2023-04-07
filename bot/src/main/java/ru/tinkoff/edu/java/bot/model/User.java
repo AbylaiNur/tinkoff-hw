@@ -9,12 +9,12 @@ import java.util.List;
 @Getter
 @Setter
 public class User {
-    String chatId;
+    Long chatId;
     List<String> links;
     String botState;
     String botLastActiveCommand;
 
-    public User(String chatId) {
+    public User(Long chatId) {
         this.chatId = chatId;
         this.links = List.of();
     }

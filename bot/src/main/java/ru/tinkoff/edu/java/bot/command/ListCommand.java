@@ -1,16 +1,22 @@
 package ru.tinkoff.edu.java.bot.command;
 
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.edu.java.bot.model.User;
-import ru.tinkoff.edu.java.bot.repository.UserRepository;
+import ru.tinkoff.edu.java.bot.dao.UserDao;
 
 import java.util.List;
 
+@Component
 public class ListCommand extends Command {
-    public ListCommand() {
-        super("/list", "list all of the tracked links");
+
+    private UserDao userDao;
+
+    public ListCommand(UserDao userDao) {
+        super("/list", "lists all of the tracked links");
+        this.userDao = userDao;
     }
 
 
@@ -20,7 +26,8 @@ public class ListCommand extends Command {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
 
-        User user = UserRepository.findUserByChatId(message.getChatId().toString());
+        User user = userDao.findUserByChatId(message.getChatId());
+
         List<String> links = user.getLinks();
 
         if (links.isEmpty()) {

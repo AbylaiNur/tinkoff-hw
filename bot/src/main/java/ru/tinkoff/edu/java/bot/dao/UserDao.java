@@ -1,25 +1,26 @@
-package ru.tinkoff.edu.java.bot.repository;
+package ru.tinkoff.edu.java.bot.dao;
 
+import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-// Temporary repository. There is no database.
+// Temporary. There is no database.
+@Component
+public class UserDao {
+    private List<User> users;
 
-public class UserRepository {
-    private static List<User> users = List.of();
-
-    public static User addUser(String chatId) {
-        List<User> newUsers = new ArrayList<>(users);
-        User newUser = new User(chatId);
-        newUsers.add(newUser);
-        users = newUsers;
-        return newUser;
+    public UserDao() {
+        this.users = new ArrayList<>();
     }
 
-    public static User findUserByChatId(String chatId) {
+    public void addUser(Long chatId) {
+        users.add(new User(chatId));
+    }
+
+    public User findUserByChatId(Long chatId) {
         for (User user : users) {
             if (Objects.equals(chatId, user.getChatId())) {
                 return user;
@@ -28,26 +29,26 @@ public class UserRepository {
         return null;
     }
 
-    public static void addLink(String chatId, String link) {
+    public void addLink(Long chatId, String link) {
         User user = findUserByChatId(chatId);
         List<String> newLinks = new ArrayList<>(user.getLinks());
         newLinks.add(link);
         user.setLinks(newLinks);
     }
 
-    public static void deleteLinkByIndex(String chatId, Integer index) {
+    public void deleteLinkByIndex(Long chatId, Integer index) {
         User user = findUserByChatId(chatId);
         List<String> newLinks = new ArrayList<>(user.getLinks());
-        newLinks.remove(index);
+        newLinks.remove((int) index);
         user.setLinks(newLinks);
     }
 
-    public static void updateBotState(String chatId, String botState) {
+    public void updateBotState(Long chatId, String botState) {
         User user = findUserByChatId(chatId);
         user.setBotState(botState);
     }
 
-    public static void updateBotLastActiveCommand(String chatId, String botLastActiveCommand) {
+    public void updateBotLastActiveCommand(Long chatId, String botLastActiveCommand) {
         User user = findUserByChatId(chatId);
         user.setBotLastActiveCommand(botLastActiveCommand);
     }

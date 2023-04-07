@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.bot;
 
 
+import jakarta.inject.Inject;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
@@ -18,15 +19,16 @@ import java.util.List;
 @Component
 public class MyBot extends TelegramLongPollingBot {
 
-    private final String telegramBotToken;
+    private String telegramBotToken;
+    private UserMessageProcessor userMessageProcessor;
 
 
-    public MyBot(String telegramBotToken) {
+    public MyBot(String telegramBotToken, UserMessageProcessor userMessageProcessor) {
         this.telegramBotToken = telegramBotToken;
+        this.userMessageProcessor = userMessageProcessor;
 
         List<BotCommand> listofCommands = new ArrayList<>();
-
-        for (Command command : UserMessageProcessor.commands) {
+        for (Command command : userMessageProcessor.getCommands()) {
             listofCommands.add(new BotCommand(command.getCommand(), command.getDescription()));
         }
 
@@ -52,7 +54,7 @@ public class MyBot extends TelegramLongPollingBot {
         if (update.hasMessage()){
             Message message = update.getMessage();
             if (message.hasText()){
-                SendMessage sendMessageResponse = UserMessageProcessor.handle(update);
+                SendMessage sendMessageResponse = userMessageProcessor.handle(update);
                 try {
                     execute(sendMessageResponse);
                 } catch (TelegramApiException e) {
@@ -61,6 +63,4 @@ public class MyBot extends TelegramLongPollingBot {
             }
         }
     }
-
-
 }
