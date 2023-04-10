@@ -13,7 +13,7 @@ public class TrackCommand extends Command {
     private UserDao userDao;
 
     public TrackCommand(UserDao userDao) {
-        super("/track", "tracks provided link");
+        super("/track", "track provided link");
         this.userDao = userDao;
     }
 

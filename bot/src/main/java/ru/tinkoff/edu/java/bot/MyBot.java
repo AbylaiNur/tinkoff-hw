@@ -27,13 +27,17 @@ public class MyBot extends TelegramLongPollingBot {
         this.telegramBotToken = telegramBotToken;
         this.userMessageProcessor = userMessageProcessor;
 
-        List<BotCommand> listofCommands = new ArrayList<>();
+        createCommandMenu();
+    }
+
+    public void createCommandMenu() {
+        List<BotCommand> listOfCommands = new ArrayList<>();
         for (Command command : userMessageProcessor.getCommands()) {
-            listofCommands.add(new BotCommand(command.getCommand(), command.getDescription()));
+            listOfCommands.add(new BotCommand(command.getCommand(), command.getDescription()));
         }
 
         try {
-            this.execute(new SetMyCommands(listofCommands, new BotCommandScopeDefault(), null));
+            this.execute(new SetMyCommands(listOfCommands, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

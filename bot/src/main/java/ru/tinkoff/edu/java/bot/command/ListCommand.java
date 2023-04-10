@@ -15,7 +15,7 @@ public class ListCommand extends Command {
     private UserDao userDao;
 
     public ListCommand(UserDao userDao) {
-        super("/list", "lists all of the tracked links");
+        super("/list", "list all of the tracked links");
         this.userDao = userDao;
     }
 

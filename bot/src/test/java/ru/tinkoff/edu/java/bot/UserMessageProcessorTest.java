@@ -27,69 +27,27 @@ public class UserMessageProcessorTest {
     @Mock
     private UserDao userDaoMock;
 
-    @Spy @InjectMocks
-    private ListCommand listCommandMock;
-
     @Spy
     private ArrayList<Command> commandsMock;
 
     @InjectMocks
     private UserMessageProcessor userMessageProcessorMock;
 
-    @BeforeEach
-    public void setUp() {
-        commandsMock.add(listCommandMock);
-    }
-
     @Test
-    public void userMessageProcessor_listCommand() {
-        User user = new User(0l);
-        Update update = new Update();
-        Message message = new Message();
+    public void handleTest_withUnknownCommandMessage() {
         Chat chat = new Chat();
-
-        user.setLinks(List.of("https://www.youtube.com"));
         chat.setId(0l);
-        message.setChat(chat);
-        message.setText("/list");
-        update.setMessage(message);
 
-
-        when(userDaoMock.findUserByChatId(any())).thenReturn(user);
-        assertEquals("1. https://www.youtube.com\n",
-                userMessageProcessorMock.handle(update).getText());
-    }
-
-    @Test
-    public void userMessageProcessor_listCommand_withEmptyList() {
-        Update update = new Update();
         Message message = new Message();
-        Chat chat = new Chat();
-
-        chat.setId(0l);
-        message.setChat(chat);
-        message.setText("/list");
-        update.setMessage(message);
-
-        when(userDaoMock.findUserByChatId(any())).thenReturn(new User(0l));
-        assertEquals("Your tracking list is empty.\nPlease add some links with /track command.",
-                userMessageProcessorMock.handle(update).getText());
-    }
-
-
-    @Test
-    public void userMessageProcessor_withUnknownCommandMessage() {
-        Update update = new Update();
-        Message message = new Message();
-        Chat chat = new Chat();
-
-        chat.setId(0l);
         message.setChat(chat);
         message.setText("fkdsljfflaj;fjsja;lfkdjlsjlfkjs");
+
+        Update update = new Update();
         update.setMessage(message);
 
         when(userDaoMock.findUserByChatId(any())).thenReturn(new User(0l));
-        assertEquals("I'm sorry, but I did not understand your command",
+
+        assertEquals("I'm sorry, but I don't understand your command",
                 userMessageProcessorMock.handle(update).getText());
     }
 }

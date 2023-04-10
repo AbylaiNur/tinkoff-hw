@@ -15,12 +15,5 @@ public class BotApplication {
         var ctx = SpringApplication.run(BotApplication.class, args);
         ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
         System.out.println(config);
-
-        try {
-            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(ctx.getBean(MyBot.class));
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
     }
 }

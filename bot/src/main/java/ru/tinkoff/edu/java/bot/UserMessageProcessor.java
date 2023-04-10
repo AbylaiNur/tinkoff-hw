@@ -47,7 +47,7 @@ public class UserMessageProcessor {
         Message message = update.getMessage();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText("I'm sorry, but I did not understand your command");
+        sendMessage.setText("I'm sorry, but I don't understand your command");
         return sendMessage;
     }
 }

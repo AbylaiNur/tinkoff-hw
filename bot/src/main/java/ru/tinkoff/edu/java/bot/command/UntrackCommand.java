@@ -14,7 +14,7 @@ public class UntrackCommand extends Command {
 
     private UserDao userDao;
     public UntrackCommand(UserDao userDao) {
-        super("/untrack", "removes the link by its index");
+        super("/untrack", "remove the tracked link by its index");
         this.userDao = userDao;
     }
 

@@ -12,7 +12,7 @@ public class StartCommand extends Command {
 
     private UserDao userDao;
     public StartCommand(UserDao userDao) {
-        super("/start", "registers user");
+        super("/start", "register");
         this.userDao = userDao;
     }
 

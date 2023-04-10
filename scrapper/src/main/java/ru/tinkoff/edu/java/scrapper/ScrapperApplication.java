@@ -16,9 +16,5 @@ public class ScrapperApplication {
         var ctx = SpringApplication.run(ScrapperApplication.class, args);
         ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
         System.out.println(config);
-
-        GithubClient githubClient = ctx.getBean(GithubClient.class);
-
-        System.out.println(githubClient.getGithubRepositoryData("AbylaiNu", "tinkoff-hw"));
     }
 }
