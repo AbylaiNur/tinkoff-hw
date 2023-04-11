@@ -2,3 +2,4 @@
 */target/*
 archetype-resources/
 META-INF/
+/postgres_data
