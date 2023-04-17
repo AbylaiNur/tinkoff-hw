@@ -9,7 +9,7 @@ import java.time.Duration;
 public class SchedulerConfiguration {
 
     @Bean
-    public Duration updateInterval(ApplicationConfig applicationConfig) {
+    public Duration getUpdateInterval(ApplicationConfig applicationConfig) {
         return applicationConfig.scheduler().interval();
     }
 }
