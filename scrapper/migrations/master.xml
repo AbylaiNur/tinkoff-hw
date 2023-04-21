@@ -9,4 +9,5 @@
 
     <include file="chat.sql"/>
     <include file="link.sql"/>
+    <include file="chat_link.sql"/>
 </databaseChangeLog>

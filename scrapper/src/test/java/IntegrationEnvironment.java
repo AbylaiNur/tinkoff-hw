@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 public abstract class IntegrationEnvironment {
 
     static PostgreSQLContainer POSTGRE_SQL_CONTAINER;
+    static Connection connection;
 
     static {
         POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:15")
@@ -25,7 +26,7 @@ public abstract class IntegrationEnvironment {
         POSTGRE_SQL_CONTAINER.start();
 
         try {
-            Connection connection = DriverManager.getConnection(
+            connection = DriverManager.getConnection(
                     POSTGRE_SQL_CONTAINER.getJdbcUrl(),
                     POSTGRE_SQL_CONTAINER.getUsername(),
                     POSTGRE_SQL_CONTAINER.getPassword()
@@ -33,7 +34,6 @@ public abstract class IntegrationEnvironment {
 
             Path path = new File(System.getProperty("user.dir"))
                     .toPath()
-                    .getParent()
                     .resolve("migrations");
 
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
