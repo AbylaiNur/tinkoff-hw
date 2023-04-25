@@ -11,10 +11,9 @@ import java.util.List;
 @Component
 public class HelpCommand extends Command {
 
-    private UserDao userDao;
     private List<Command> commands;
 
-    public HelpCommand(UserDao userDao, List<Command> commands) {
+    public HelpCommand(List<Command> commands) {
         super("/help", "list all of the commands");
         this.commands = commands;
     }

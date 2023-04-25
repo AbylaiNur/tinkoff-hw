@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import ru.tinkoff.edu.java.scrapper.client.dto.GithubApiRepositoryDTO;
-import ru.tinkoff.edu.java.scrapper.client.dto.response.GetGithubRepositoryDataResponse;
+import ru.tinkoff.edu.java.scrapper.dto.GithubApiRepositoryDTO;
+import ru.tinkoff.edu.java.scrapper.dto.response.GetGithubRepositoryDataResponse;
 
 
 @Service

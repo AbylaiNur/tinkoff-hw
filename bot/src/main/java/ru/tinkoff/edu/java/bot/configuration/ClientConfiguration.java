@@ -7,13 +7,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class ClientConfiguration {
-    @Value("${scrapperUrl:localhost:8080}")
+    @Value("${base-url.scrapper:http://localhost:8080}")
     private String scrapperUrl;
 
     @Bean
     public WebClient scrapperWebClient() {
+        System.out.println(scrapperUrl);
         return WebClient.builder()
                 .baseUrl(scrapperUrl)
                 .build();
+
     }
 }

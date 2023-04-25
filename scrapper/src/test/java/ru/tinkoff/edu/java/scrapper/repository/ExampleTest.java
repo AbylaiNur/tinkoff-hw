@@ -1,6 +1,7 @@
+package ru.tinkoff.edu.java.scrapper.repository;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.sql.*;
 import java.util.*;
@@ -8,6 +9,12 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExampleTest extends IntegrationEnvironment {
+
+
+    @AfterAll
+    static void tearDown() throws SQLException {
+        connection.close();
+    }
 
     @Test
     void containerIsRunningTest() {

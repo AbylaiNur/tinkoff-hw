@@ -14,12 +14,12 @@ public class ScrapperClient {
 
     private final WebClient scrapperClient;
 
-    public ListLinksResponse listLinks(Long id) {
+    public ListLinksResponse listLinks(Long tgChatId) {
         try {
             return this.scrapperClient
                     .get()
                     .uri("/links")
-                    .header("Tg-Chat-Id", String.valueOf(id))
+                    .header("Tg-Chat-Id", String.valueOf(tgChatId))
                     .retrieve().bodyToMono(ListLinksResponse.class)
                     .block();
         } catch (Exception e) {
@@ -28,35 +28,50 @@ public class ScrapperClient {
         }
     }
 
-    public void addLink(Long id, AddLinkRequest request) {
+    public void addLink(Long tgChatId, AddLinkRequest request) {
         this.scrapperClient
                 .post()
                 .uri("/links")
-                .header("Tg-Chat-Id", String.valueOf(id))
+                .header("Tg-Chat-Id", String.valueOf(tgChatId))
                 .bodyValue(request)
                 .retrieve().bodyToMono(ListLinksResponse.class)
                 .block();
     }
 
-    public void deleteLinks(Long id, RemoveLinkRequest request) {
+    public void deleteLinks(Long tgChatId, RemoveLinkRequest request) {
         this.scrapperClient
                 .method(HttpMethod.DELETE)
                 .uri("/links")
-                .header("Tg-Chat-Id", String.valueOf(id))
+                .header("Tg-Chat-Id", String.valueOf(tgChatId))
                 .bodyValue(request)
                 .retrieve().bodyToMono(RemoveLinkRequest.class)
                 .block();
     }
 
-    public void getTgChat(Long id) {
-        this.scrapperClient
+    public void registerTgChat(Long tgChatId) {
+        System.out.println(this.scrapperClient
                 .post()
-                .uri("/tg-chat/{id}", id);
+                .uri("/tg-chat/{tgChatId}", tgChatId)
+                .retrieve().bodyToMono(String.class)
+                .block());
+        System.out.println("registered " + tgChatId);
+
+        // do post request with scrapperClient to localhost:8080/tg-chat/{tgChatId}
+        /*
+        try {
+            this.scrapperClient
+                    .post()
+                    .uri("/tg-chat/{tgChatId}", tgChatId)
+                    .retrieve().bodyToMono(String.class)
+                    .block();
+        } catch (Exception e) {
+
+         */
     }
 
-    public void deleteTgChat(Long id) {
+    public void deleteTgChat(Long tgChatId) {
         this.scrapperClient
                 .delete()
-                .uri("/tg-chat/{id}", id);
+                .uri("/tg-chat/{id}", tgChatId);
     }
 }
