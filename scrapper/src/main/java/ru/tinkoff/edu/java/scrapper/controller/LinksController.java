@@ -8,8 +8,7 @@ import ru.tinkoff.edu.java.scrapper.dto.request.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.request.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.response.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.response.ListLinksResponse;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcChatService;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
 @RequestMapping("/links")
 public class LinksController {
 
-    private final JdbcLinkService linkService;
+    private final LinkService linkService;
 
     @GetMapping
     public ListLinksResponse listLinks(@RequestHeader("Tg-Chat-Id") Long chatId) {

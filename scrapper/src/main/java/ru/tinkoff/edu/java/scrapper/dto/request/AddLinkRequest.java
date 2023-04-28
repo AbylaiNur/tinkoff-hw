@@ -8,6 +8,6 @@ import java.net.URI;
 @Validated
 public record AddLinkRequest(
         @NotNull
-        URI link
+        String link
 ) {
 }

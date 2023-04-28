@@ -7,7 +7,6 @@ import java.time.Duration;
 
 @Configuration
 public class SchedulerConfiguration {
-
     @Bean
     public Duration getUpdateInterval(ApplicationConfig applicationConfig) {
         return applicationConfig.scheduler().interval();

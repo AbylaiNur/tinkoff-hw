@@ -1,16 +1,17 @@
 package ru.tinkoff.edu.java.scrapper.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
-@Table(name="chat")
 public class Chat {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @Column(name="id")
     private Long id;
 }

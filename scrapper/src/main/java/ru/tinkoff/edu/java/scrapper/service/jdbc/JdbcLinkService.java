@@ -11,7 +11,6 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
 
@@ -19,7 +18,7 @@ public class JdbcLinkService implements LinkService {
     private final JdbcChatLinkRepository chatLinkRepository;
 
     @Override
-    public Link add(long chatId, URI url) {
+    public Link add(long chatId, String url) {
         Link link = linkRepository.findByUrl(url);
         if (link == null) {
             link = new Link();
@@ -35,7 +34,7 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
-    public Link remove(long chatId, URI url) {
+    public Link remove(long chatId, String url) {
         Link link = linkRepository.findByUrl(url);
 
         if (link == null) {

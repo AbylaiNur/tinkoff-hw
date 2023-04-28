@@ -1,5 +1,5 @@
 CREATE TABLE link (
-    id              SERIAL          PRIMARY KEY,
+    id              BIGSERIAL       PRIMARY KEY,
     url             VARCHAR(255)    NOT NULL UNIQUE,
     last_checked    TIMESTAMP,
     last_updated    TIMESTAMP

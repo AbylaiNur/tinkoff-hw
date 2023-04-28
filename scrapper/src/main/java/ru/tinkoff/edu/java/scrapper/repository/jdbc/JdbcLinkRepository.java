@@ -30,7 +30,7 @@ public class JdbcLinkRepository implements LinkRepository {
         jdbcTemplate.update((connection) -> {
             PreparedStatement ps = connection.prepareStatement(
                     "INSERT INTO link (url) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, link.getUrl().toString());
+            ps.setString(1, link.getUrl());
             return ps;
         }, keyHolder);
 
@@ -54,7 +54,7 @@ public class JdbcLinkRepository implements LinkRepository {
 
 
     @Override
-    public Link findByUrl(URI uri) {
+    public Link findByUrl(String uri) {
         List<Link> links = jdbcTemplate.query("SELECT * FROM link WHERE url = ?",
                 rowMapper,
                 uri.toString()

@@ -12,7 +12,6 @@ import ru.tinkoff.edu.java.scrapper.service.ChatService;
 import java.net.URI;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcChatService implements ChatService {
 
@@ -32,7 +31,7 @@ public class JdbcChatService implements ChatService {
     }
 
     @Override
-    public List<Chat> findAllByLink(URI url) {
+    public List<Chat> findAllByLink(String url) {
         Link link = linkRepository.findByUrl(url);
         return chatLinkRepository.findChatsByLinkId(link.getId());
     }
