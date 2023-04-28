@@ -52,32 +52,6 @@ public class JdbcLinkRepository implements LinkRepository {
         return jdbcTemplate.update("TRUNCATE TABLE link CASCADE ") == 1;
     }
 
-    @Override
-    public List<Link> findAllByChatId(Long chatId) {
-        return jdbcTemplate.query(
-                "SELECT * FROM link WHERE id IN (SELECT link_id FROM chat_link WHERE chat_id = ?)",
-                rowMapper,
-                chatId
-        );
-    }
-
-    @Override
-    public boolean addLinkToChat(Long linkId, Long chatId) {
-        return jdbcTemplate.update(
-                "INSERT INTO chat_link (link_id, chat_id) VALUES (?, ?)",
-                linkId,
-                chatId
-        ) == 1;
-    }
-
-    @Override
-    public boolean removeLinkFromChat(Long linkId, Long chatId) {
-        return jdbcTemplate.update(
-                "DELETE FROM chat_link WHERE link_id = ? AND chat_id = ?",
-                linkId,
-                chatId
-        ) == 1;
-    }
 
     @Override
     public Link findByUrl(URI uri) {

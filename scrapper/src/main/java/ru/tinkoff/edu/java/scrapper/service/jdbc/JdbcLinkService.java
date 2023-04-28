@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.model.Link;
+import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
@@ -14,8 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
 
-
     private final JdbcLinkRepository linkRepository;
+    private final JdbcChatLinkRepository chatLinkRepository;
 
     @Override
     public Link add(long chatId, URI url) {
@@ -29,7 +30,7 @@ public class JdbcLinkService implements LinkService {
             link.setId(linkId);
         }
 
-        linkRepository.addLinkToChat(link.getId(), chatId);
+        chatLinkRepository.addLinkToChat(link.getId(), chatId);
         return link;
     }
 
@@ -41,15 +42,18 @@ public class JdbcLinkService implements LinkService {
             return null;
         }
 
-        linkRepository.removeLinkFromChat(link.getId(), chatId);
+        chatLinkRepository.removeLinkFromChat(link.getId(), chatId);
         return link;
     }
 
     @Override
     public List<Link> listAll(long chatId) {
-        return linkRepository.findAllByChatId(chatId);
+        return chatLinkRepository.findLinksByChatId(chatId);
+    }
+
+    @Override
+    public Link update(Link link) {
+        linkRepository.update(link);
+        return link;
     }
 }
-
-// Q: difference between Collection and List
-//

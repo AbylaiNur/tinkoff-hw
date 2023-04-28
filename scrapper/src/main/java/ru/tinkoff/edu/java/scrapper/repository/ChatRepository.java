@@ -9,5 +9,4 @@ public interface ChatRepository {
     List<Chat> findAll();
     boolean remove(Long id);
     boolean removeAll();
-    List<Chat> findAllByLinkId(Long linkId);
 }

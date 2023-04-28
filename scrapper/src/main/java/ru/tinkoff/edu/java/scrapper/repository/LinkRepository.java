@@ -13,11 +13,7 @@ public interface LinkRepository {
     List<Link> findAll();
     boolean remove(Long id);
     boolean removeAll();
-    List<Link> findAllByChatId(Long chatId);
-    boolean addLinkToChat(Long linkId, Long chatId);
-    boolean removeLinkFromChat(Long linkId, Long chatId);
     Link findByUrl(URI uri);
-
     List<Link> findAllBeforeTime(OffsetDateTime time);
     Long update(Link link);
 }

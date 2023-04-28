@@ -32,12 +32,5 @@ public class JdbcChatRepository implements ChatRepository {
         return jdbcTemplate.update("TRUNCATE TABLE chat CASCADE ") == 1;
     }
 
-    @Override
-    public List<Chat> findAllByLinkId(Long linkId) {
-        return jdbcTemplate.query(
-                "SELECT * FROM chat WHERE id IN (SELECT chat_id FROM chat_link WHERE link_id = ?)",
-                rowMapper,
-                linkId
-        );
-    }
+
 }
