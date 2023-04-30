@@ -33,6 +33,14 @@ public class JpaLinkService implements LinkService {
         Link link = linkRepository.findByUrl(url).orElseGet(
                 () -> linkRepository.save(new Link().setUrl(url))
         );
+
+        ChatLink chatLink = chatLinkRepository.findById(
+                new ChatLinkId()
+                        .setChatId(tgChatId)
+                        .setLinkId(link.getId())).orElseGet(
+                () -> chatLinkRepository.save(new ChatLink().setChatId(tgChatId).setLinkId(link.getId()))
+        );
+
         return link;
 
     }
@@ -65,12 +73,22 @@ public class JpaLinkService implements LinkService {
         Chat chat = chatRepository.findById(tgChatId).orElseThrow(
                 () -> new IllegalArgumentException("Chat with id " + tgChatId + " not found")
         );
-        return chatLinkRepository.findLinksByChatId(chat.getId());
+        return chatLinkRepository.findAllByChatId(chat.getId()).stream().map(chatLink -> chatLink.getLink()).toList();
     }
 
     @Transactional
     @Override
     public Link update(Link link) {
-        return linkRepository.save(link);
+        linkRepository.findById(link.getId()).orElseThrow(
+                () -> new IllegalArgumentException("Link with id " + link.getId() + " not found")
+        );
+
+        Link linkToUpdate = linkRepository.getOne(link.getId());
+
+        linkToUpdate.setUrl(link.getUrl());
+        linkToUpdate.setLastUpdated(link.getLastUpdated());
+        linkToUpdate.setLastChecked(link.getLastChecked());
+
+        return linkRepository.save(linkToUpdate);
     }
 }

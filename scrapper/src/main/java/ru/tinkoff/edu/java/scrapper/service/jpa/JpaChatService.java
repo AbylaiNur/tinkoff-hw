@@ -21,7 +21,10 @@ public class JpaChatService implements ChatService {
     @Transactional
     @Override
     public void register(long tgChatId) {
-        chatRepository.save(new Chat().setId(tgChatId));
+        chatRepository.findById(tgChatId).orElse(
+                chatRepository.save(new Chat().setId(tgChatId))
+        );
+
     }
 
     @Transactional
@@ -31,7 +34,7 @@ public class JpaChatService implements ChatService {
         chatRepository.findById(tgChatId).orElseThrow(
                 () -> new IllegalArgumentException("Chat with id " + tgChatId + " not found"));
 
-        List<Link> links = chatLinkRepository.findLinksByChatId(tgChatId);
+        List<Link> links = chatLinkRepository.findAllByChatId(tgChatId).stream().map(chatLink -> chatLink.getLink()).toList();
 
         links.forEach(link -> chatLinkRepository.deleteByChatIdAndLinkId(tgChatId, link.getId()));
 
@@ -44,6 +47,6 @@ public class JpaChatService implements ChatService {
         Link link = linkRepository.findByUrl(url).orElseThrow(
                 () -> new IllegalArgumentException("Link not found")
         );
-        return chatLinkRepository.findChatsByLinkId(link.getId());
+        return chatLinkRepository.findAllByLinkId(link.getId()).stream().map(chatLink -> chatLink.getChat()).toList();
     }
 }

@@ -11,11 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JpaChatLinkRepository extends JpaRepository<ChatLink, ChatLinkId> {
-    @Query("select cl.link from ChatLink cl where cl.chatId = ?1")
-    List<Link> findLinksByChatId(Long chatId);
-
-    @Query("select cl.chat from ChatLink cl where cl.linkId = ?1")
-    List<Chat> findChatsByLinkId(Long linkId);
+    List<ChatLink> findAllByChatId(Long chatId);
+    List<ChatLink> findAllByLinkId(Long linkId);
 
     void deleteByChatIdAndLinkId(Long chatId, Long linkId);
 

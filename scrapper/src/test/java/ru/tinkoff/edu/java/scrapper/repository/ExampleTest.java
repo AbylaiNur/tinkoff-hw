@@ -2,6 +2,7 @@ package ru.tinkoff.edu.java.scrapper.repository;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 
 import java.sql.*;
 import java.util.*;
