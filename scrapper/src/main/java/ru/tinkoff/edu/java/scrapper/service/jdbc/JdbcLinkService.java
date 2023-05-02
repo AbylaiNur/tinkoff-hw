@@ -55,4 +55,9 @@ public class JdbcLinkService implements LinkService {
         linkRepository.update(link);
         return link;
     }
+
+    @Override
+    public List<Link> findAll() {
+        return linkRepository.findAll();
+    }
 }

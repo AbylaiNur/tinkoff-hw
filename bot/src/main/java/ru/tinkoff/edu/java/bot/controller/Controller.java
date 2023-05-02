@@ -9,20 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tinkoff.edu.java.bot.MyBot;
 import ru.tinkoff.edu.java.bot.dto.request.LinkUpdateRequest;
+import ru.tinkoff.edu.java.bot.service.LinkUpdateProcessor;
 
 @RestController
 @RequestMapping("/updates")
 @RequiredArgsConstructor
 public class Controller {
 
-    private final MyBot myBot;
+    private final LinkUpdateProcessor linkUpdateProcessor;
+
     @PostMapping
     public void linkUpdate(@Valid @RequestBody LinkUpdateRequest request) {
-        System.out.println(request.id());
-        System.out.println(request.url());
-        System.out.println(request.description());
-        for (Long tgChatId : request.tgChatIds()) {
-            myBot.notifyUser(tgChatId, request.url(), request.description());
-        }
+        linkUpdateProcessor.process(request);
     }
 }
