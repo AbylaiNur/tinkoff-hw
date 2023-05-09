@@ -28,17 +28,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: set lower case owner name
-        run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-        env:
-          OWNER: '${{ github.agent }}'
-
       - name: Build Docker image
         run: docker build -t bot:latest . -f bot/Dockerfile
 
+      - name: Set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.actor }}'
+
       - name: Push Docker image
-        run: docker push ghcr.io/${{ OWNER_LC }}/bot:latest
+        run: docker push ghcr.io/${{ env.OWNER_LC }}/bot:latest
 
   checkstyle:
     runs-on: ubuntu-latest

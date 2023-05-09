@@ -32,8 +32,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t scrapper:latest . -f scrapper/Dockerfile
 
+      - name: Set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.actor }}'
+
       - name: Push Docker image
-        run: docker push ghcr.io/${{ github.actor }}/scrapper:latest
+        run: docker push ghcr.io/${{ env.OWNER_LC }}/scrapper:latest
 
   checkstyle:
     runs-on: ubuntu-latest
