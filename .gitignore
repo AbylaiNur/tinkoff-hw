@@ -4,3 +4,4 @@ archetype-resources/
 META-INF/
 /scrapper/postgres_data
 /scrapper/rabbitmq_data
+/target
