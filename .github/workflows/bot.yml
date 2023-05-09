@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t bot:latest . -f bot/Dockerfile
+        run: docker build -t ghcr.io/${{ env.GITHUB_ACTOR_LOWER }}/bot:latest . -f bot/Dockerfile
 
       - name: Set lower case owner name
         run: |
