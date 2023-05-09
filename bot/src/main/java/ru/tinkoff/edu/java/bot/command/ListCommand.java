@@ -7,8 +7,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 import ru.tinkoff.edu.java.bot.client.dto.response.LinkResponse;
 import ru.tinkoff.edu.java.bot.client.dto.response.ListLinksResponse;
-import ru.tinkoff.edu.java.bot.model.User;
-import ru.tinkoff.edu.java.bot.dao.UserDao;
 
 import java.util.List;
 
@@ -32,18 +30,21 @@ public class ListCommand extends Command {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(tgChatId);
 
-        ListLinksResponse listLinksResponse = scrapperClient.listLinks(tgChatId);
+        ListLinksResponse listLinksResponse =
+            scrapperClient.listLinks(tgChatId);
 
         List<LinkResponse> links = listLinksResponse.links();
 
         if (links.isEmpty()) {
-            sendMessage.setText("Your tracking list is empty.\nPlease add some links with /track command.");
+            sendMessage.setText("Your tracking list is empty.\n"
+                + "Please add some links with /track command.");
             return sendMessage;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < links.size(); i++) {
-            stringBuilder.append(String.valueOf(i + 1) + ". " + links.get(i).url().toString() + "\n");
+            stringBuilder.append((i + 1) + ". "
+                + links.get(i).url().toString() + "\n");
         }
 
         String str = stringBuilder.toString();

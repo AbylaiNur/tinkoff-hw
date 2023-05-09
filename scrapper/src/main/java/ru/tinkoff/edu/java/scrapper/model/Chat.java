@@ -1,6 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -12,6 +14,6 @@ import lombok.experimental.Accessors;
 @Entity
 public class Chat {
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 }

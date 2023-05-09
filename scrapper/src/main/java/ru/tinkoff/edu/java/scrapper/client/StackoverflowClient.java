@@ -13,15 +13,18 @@ import ru.tinkoff.edu.java.scrapper.dto.response.GetStackoverflowQuestionDataRes
 public class StackoverflowClient {
     private final WebClient stackoverflowWebClient;
 
-    public GetStackoverflowQuestionDataResponse getStackoverflowQuestionData(String id) {
+    public GetStackoverflowQuestionDataResponse getStackoverflowQuestionData(
+        String id) {
         try {
             StackoverflowApiQuestionDTO data = this.stackoverflowWebClient
                     .get()
-                    .uri("/questions/{id}?order=desc&sort=activity&site=stackoverflow", id)
+                    .uri("/questions/{id}"
+                        + "?order=desc&sort=activity&site=stackoverflow", id)
                     .retrieve().bodyToMono(StackoverflowApiQuestionDTO.class)
                     .block();
 
-            GetStackoverflowQuestionDataResponse newData = new GetStackoverflowQuestionDataResponse(
+            GetStackoverflowQuestionDataResponse newData =
+                new GetStackoverflowQuestionDataResponse(
                     data.items().get(0).isAnswered(),
                     data.items().get(0).viewCount(),
                     data.items().get(0).answerCount(),

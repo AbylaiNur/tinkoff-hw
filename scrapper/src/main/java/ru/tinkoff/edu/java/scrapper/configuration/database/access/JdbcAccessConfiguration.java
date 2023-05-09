@@ -12,21 +12,28 @@ import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcChatService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
 
 @Configuration
-@ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jdbc")
+@ConditionalOnProperty(
+    prefix = "app", name = "database-access-type", havingValue = "jdbc")
 public class JdbcAccessConfiguration {
 
     @Bean
-    public LinkService linkService(JdbcLinkRepository jdbcLinkRepository,
-                                       JdbcChatLinkRepository jdbcChatLinkRepository
+    public LinkService linkService(
+        JdbcLinkRepository jdbcLinkRepository,
+        JdbcChatLinkRepository jdbcChatLinkRepository
     ) {
-        return new JdbcLinkService(jdbcLinkRepository, jdbcChatLinkRepository);
+        return new JdbcLinkService(
+            jdbcLinkRepository, jdbcChatLinkRepository);
     }
 
     @Bean
-    public ChatService chatService(JdbcChatRepository jdbcChatRepository,
-                                       JdbcLinkRepository jdbcLinkRepository,
-                                       JdbcChatLinkRepository jdbcChatLinkRepository
+    public ChatService chatService(
+        JdbcChatRepository jdbcChatRepository,
+        JdbcLinkRepository jdbcLinkRepository,
+        JdbcChatLinkRepository jdbcChatLinkRepository
     ) {
-        return new JdbcChatService(jdbcChatRepository, jdbcLinkRepository, jdbcChatLinkRepository);
+        return new JdbcChatService(
+            jdbcChatRepository,
+            jdbcLinkRepository,
+            jdbcChatLinkRepository);
     }
 }

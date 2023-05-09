@@ -3,7 +3,13 @@ package ru.tinkoff.edu.java.scrapper.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.tinkoff.edu.java.scrapper.dto.request.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.request.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.response.LinkResponse;
@@ -20,7 +26,9 @@ public class LinksController {
     private final LinkService linkService;
 
     @GetMapping
-    public ListLinksResponse listLinks(@RequestHeader("Tg-Chat-Id") Long chatId) {
+    public ListLinksResponse listLinks(
+        @RequestHeader("Tg-Chat-Id") Long chatId
+    ) {
         List<LinkResponse> links =
                 linkService.listAll(chatId)
                 .stream()
@@ -31,12 +39,19 @@ public class LinksController {
     }
 
     @PostMapping
-    public LinkResponse addLink(@Valid @RequestBody AddLinkRequest request, @RequestHeader("Tg-Chat-Id") Long chatId) {
+    public LinkResponse addLink(
+        @Valid @RequestBody AddLinkRequest request,
+        @RequestHeader("Tg-Chat-Id") Long chatId
+    ) {
         linkService.add(chatId, request.link());
         return new LinkResponse(chatId, request.link());
     }
 
-    @DeleteMapping LinkResponse removeLink(@RequestBody RemoveLinkRequest request, @RequestHeader("Tg-Chat-Id") Long chatId) {
+    @DeleteMapping
+    LinkResponse removeLink(
+        @RequestBody RemoveLinkRequest request,
+        @RequestHeader("Tg-Chat-Id") Long chatId
+    ) {
         linkService.remove(chatId, request.link());
         return new LinkResponse(chatId, request.link());
     }

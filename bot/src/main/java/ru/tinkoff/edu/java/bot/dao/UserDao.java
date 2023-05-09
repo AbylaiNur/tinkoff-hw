@@ -48,7 +48,9 @@ public class UserDao {
         user.setBotState(botState);
     }
 
-    public void updateBotLastActiveCommand(Long chatId, String botLastActiveCommand) {
+    public void updateBotLastActiveCommand(
+        Long chatId, String botLastActiveCommand
+    ) {
         User user = findUserByChatId(chatId);
         user.setBotLastActiveCommand(botLastActiveCommand);
     }

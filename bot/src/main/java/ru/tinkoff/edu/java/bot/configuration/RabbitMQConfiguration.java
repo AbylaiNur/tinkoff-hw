@@ -1,6 +1,11 @@
 package ru.tinkoff.edu.java.bot.configuration;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.support.converter.ClassMapper;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -55,24 +60,30 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Binding deadLetterBinding(FanoutExchange deadLetterExchange, Queue deadLetterQueue) {
+    public Binding deadLetterBinding(FanoutExchange deadLetterExchange,
+                                     Queue deadLetterQueue) {
         return BindingBuilder.bind(deadLetterQueue).to(deadLetterExchange);
     }
 
     @Bean
     public ClassMapper classMapper() {
         Map<String, Class<?>> mappings = new HashMap<>();
-        mappings.put("ru.tinkoff.edu.java.scrapper.dto.request.LinkUpdateRequest", LinkUpdateRequest.class);
+        mappings.put(
+            "ru.tinkoff.edu.java.scrapper.dto.request.LinkUpdateRequest",
+            LinkUpdateRequest.class
+        );
 
         DefaultClassMapper classMapper = new DefaultClassMapper();
-        classMapper.setTrustedPackages("ru.tinkoff.edu.java.scrapper.dto.request.*");
+        classMapper.setTrustedPackages(
+            "ru.tinkoff.edu.java.scrapper.dto.request.*");
         classMapper.setIdClassMapping(mappings);
         return classMapper;
     }
 
     @Bean
     public MessageConverter jsonMessageConverter(ClassMapper classMapper) {
-        Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
+        Jackson2JsonMessageConverter jsonConverter =
+            new Jackson2JsonMessageConverter();
         jsonConverter.setClassMapper(classMapper);
         return jsonConverter;
     }

@@ -11,7 +11,12 @@ public class ClientLinkUpdateSender implements LinkUpdateSender {
     private final TgBotClient tgBotClient;
 
     @Override
-    public void send(Long id, String url, String description, List<Long> tgChatIds) {
+    public void send(
+        Long id,
+        String url,
+        String description,
+        List<Long> tgChatIds
+    ) {
         tgBotClient.updates(id, url, description, tgChatIds);
     }
 }

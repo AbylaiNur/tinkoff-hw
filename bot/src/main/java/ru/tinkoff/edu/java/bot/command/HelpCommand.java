@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.tinkoff.edu.java.bot.dao.UserDao;
 
 import java.util.List;
 
@@ -26,7 +25,8 @@ public class HelpCommand extends Command {
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Command command : commands) {
-            stringBuilder.append(command.getCommand() + " - " + command.getDescription() + "\n");
+            stringBuilder.append(command.getCommand() + " - "
+                + command.getDescription() + "\n");
         }
 
         String str = stringBuilder.toString();

@@ -9,12 +9,17 @@ public record LinkHelper() {
             URL url = new URL(link);
             String strPath = url.getPath();
 
-            int startIndex, endIndex;
+            int startIndex;
+            int endIndex;
             for (startIndex = 0; startIndex < strPath.length(); startIndex++) {
-                if (strPath.charAt(startIndex) != '/') break;
+                if (strPath.charAt(startIndex) != '/') {
+                    break;
+                }
             }
             for (endIndex = strPath.length() - 1; endIndex >= 0; endIndex--) {
-                if (strPath.charAt(endIndex) != '/') break;
+                if (strPath.charAt(endIndex) != '/') {
+                    break;
+                }
             }
 
             if (startIndex >= endIndex) {

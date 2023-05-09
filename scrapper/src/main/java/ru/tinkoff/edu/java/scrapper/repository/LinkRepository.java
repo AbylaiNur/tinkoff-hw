@@ -1,11 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
-import ru.tinkoff.edu.java.scrapper.model.Chat;
 import ru.tinkoff.edu.java.scrapper.model.Link;
 
-import java.net.URI;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 
 public interface LinkRepository {

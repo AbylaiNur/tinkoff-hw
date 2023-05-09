@@ -1,7 +1,15 @@
 package ru.tinkoff.edu.java.linkParser.validators;
 
 public abstract class Validator {
-    public Validator next;
+    private Validator next;
+
+    public Validator getNext() {
+        return next;
+    }
+
+    public void setNext(Validator next) {
+        this.next = next;
+    }
 
     public abstract Boolean validate();
 

@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface LinkParser {
 
-    public Map<String, String> parse(String url);
+    Map<String, String> parse(String url);
 
-    public Boolean canParse(String url);
+    Boolean canParse(String url);
 }

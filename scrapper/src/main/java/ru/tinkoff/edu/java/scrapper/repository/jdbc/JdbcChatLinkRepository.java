@@ -24,7 +24,8 @@ public class JdbcChatLinkRepository implements ChatLinkRepository {
     @Override
     public List<Chat> findChatsByLinkId(Long linkId) {
         return jdbcTemplate.query(
-                "SELECT * FROM chat WHERE id IN (SELECT chat_id FROM chat_link WHERE link_id = ?)",
+                "SELECT * FROM chat WHERE id IN "
+                    + "(SELECT chat_id FROM chat_link WHERE link_id = ?)",
                 chatRowMapper,
                 linkId
         );
@@ -33,7 +34,8 @@ public class JdbcChatLinkRepository implements ChatLinkRepository {
     @Override
     public List<Link> findLinksByChatId(Long chatId) {
         return jdbcTemplate.query(
-                "SELECT * FROM link WHERE id IN (SELECT link_id FROM chat_link WHERE chat_id = ?)",
+                "SELECT * FROM link WHERE id IN "
+                    + "(SELECT link_id FROM chat_link WHERE chat_id = ?)",
                 linkRowMapper,
                 chatId
         );

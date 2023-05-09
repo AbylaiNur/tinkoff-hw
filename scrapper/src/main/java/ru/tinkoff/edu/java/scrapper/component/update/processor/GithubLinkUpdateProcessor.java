@@ -1,6 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.component.update.processor;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.linkParser.parsers.GithubLinkParser;
 import ru.tinkoff.edu.java.scrapper.client.GithubClient;
@@ -14,7 +13,6 @@ import ru.tinkoff.edu.java.scrapper.service.sender.LinkUpdateSender;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,7 +24,12 @@ public class GithubLinkUpdateProcessor implements LinkUpdateProcessor {
     private final GithubLinkParser githubLinkParser;
     private final String host;
 
-    public GithubLinkUpdateProcessor(GithubClient githubClient, LinkUpdateSender linkUpdateSender, ChatService chatService, LinkService linkService) {
+    public GithubLinkUpdateProcessor(
+        GithubClient githubClient,
+        LinkUpdateSender linkUpdateSender,
+        ChatService chatService,
+        LinkService linkService
+    ) {
         this.githubClient = githubClient;
         this.linkUpdateSender = linkUpdateSender;
         this.chatService = chatService;
@@ -38,7 +41,8 @@ public class GithubLinkUpdateProcessor implements LinkUpdateProcessor {
     @Override
     public void process(Link link) {
 
-        Map<String, String> parsedLink = githubLinkParser.parse(link.getUrl().toString());
+        Map<String, String> parsedLink
+            = githubLinkParser.parse(link.getUrl().toString());
 
         String username = parsedLink.get("username");
         String repository = parsedLink.get("repository");
@@ -51,7 +55,7 @@ public class GithubLinkUpdateProcessor implements LinkUpdateProcessor {
             return;
         }
 
-        if (!Objects.equals(repositoryData.updatedAt(), link.getLastUpdated())) {
+        if (!repositoryData.updatedAt().equals(link.getLastUpdated())) {
             link.setLastChecked(OffsetDateTime.now());
             link.setLastUpdated(repositoryData.updatedAt());
             linkService.update(link);
@@ -59,7 +63,10 @@ public class GithubLinkUpdateProcessor implements LinkUpdateProcessor {
                     link.getId(),
                     link.getUrl(),
                     "updated",
-                    chatService.findAllByLink(link.getUrl()).stream().map(Chat::getId).collect(Collectors.toList()));
+                    chatService.findAllByLink(link.getUrl())
+                        .stream()
+                        .map(Chat::getId)
+                        .collect(Collectors.toList()));
         }
     }
 

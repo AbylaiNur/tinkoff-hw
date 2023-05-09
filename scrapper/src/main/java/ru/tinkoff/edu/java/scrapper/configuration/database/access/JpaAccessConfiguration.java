@@ -13,21 +13,30 @@ import ru.tinkoff.edu.java.scrapper.service.jpa.JpaChatService;
 import ru.tinkoff.edu.java.scrapper.service.jpa.JpaLinkService;
 
 @Configuration
-@ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jpa")
+@ConditionalOnProperty(
+    prefix = "app", name = "database-access-type", havingValue = "jpa")
 public class JpaAccessConfiguration {
     @Bean
-    public LinkService linkService(JpaChatRepository jpaChatRepository,
-                                   JpaLinkRepository jpaLinkRepository,
-                                   JpaChatLinkRepository jpaChatLinkRepository
+    public LinkService linkService(
+        JpaChatRepository jpaChatRepository,
+        JpaLinkRepository jpaLinkRepository,
+        JpaChatLinkRepository jpaChatLinkRepository
     ) {
-        return new JpaLinkService(jpaChatRepository, jpaLinkRepository, jpaChatLinkRepository);
+        return new JpaLinkService(
+            jpaChatRepository,
+            jpaLinkRepository,
+            jpaChatLinkRepository);
     }
 
     @Bean
-    public ChatService chatService(JpaChatRepository jpaChatRepository,
-                                   JpaLinkRepository jpaLinkRepository,
-                                   JpaChatLinkRepository jpaChatLinkRepository
+    public ChatService chatService(
+        JpaChatRepository jpaChatRepository,
+        JpaLinkRepository jpaLinkRepository,
+        JpaChatLinkRepository jpaChatLinkRepository
     ) {
-        return new JpaChatService(jpaChatRepository, jpaLinkRepository, jpaChatLinkRepository);
+        return new JpaChatService(
+            jpaChatRepository,
+            jpaLinkRepository,
+            jpaChatLinkRepository);
     }
 }

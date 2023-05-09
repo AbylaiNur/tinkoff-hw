@@ -1,10 +1,15 @@
 package ru.tinkoff.edu.java.linkParser.parsers;
 
 import ru.tinkoff.edu.java.linkParser.utils.LinkHelper;
-import ru.tinkoff.edu.java.linkParser.validators.*;
+import ru.tinkoff.edu.java.linkParser.validators.DomainNameValidator;
+import ru.tinkoff.edu.java.linkParser.validators.IncludeSegmentPathNameValidator;
+import ru.tinkoff.edu.java.linkParser.validators.IntegerSegmentPathValidator;
+import ru.tinkoff.edu.java.linkParser.validators.MinPathSizeValidator;
+import ru.tinkoff.edu.java.linkParser.validators.ValidLinkValidator;
+import ru.tinkoff.edu.java.linkParser.validators.Validator;
+import ru.tinkoff.edu.java.linkParser.validators.ValidatorChainBuilder;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class StackoverflowLinkParser implements LinkParser {

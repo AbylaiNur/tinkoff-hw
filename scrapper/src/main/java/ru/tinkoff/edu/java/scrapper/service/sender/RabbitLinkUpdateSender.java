@@ -13,9 +13,14 @@ public class RabbitLinkUpdateSender implements LinkUpdateSender {
     private final ScrapperQueueProducer scrapperQueueProducer;
 
     @Override
-    public void send(Long id, String url, String description, List<Long> tgChatIds) {
-        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(id, url, description, tgChatIds);
-        System.out.println("RabbitLinkUpdateSender.send: " + linkUpdateRequest.toString());
+    public void send(
+        Long id,
+        String url,
+        String description,
+        List<Long> tgChatIds
+    ) {
+        LinkUpdateRequest linkUpdateRequest
+            = new LinkUpdateRequest(id, url, description, tgChatIds);
         scrapperQueueProducer.send(linkUpdateRequest);
     }
 }

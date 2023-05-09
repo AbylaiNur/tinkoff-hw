@@ -49,24 +49,11 @@ public class ScrapperClient {
     }
 
     public void registerTgChat(Long tgChatId) {
-        System.out.println(this.scrapperClient
+        this.scrapperClient
                 .post()
                 .uri("/tg-chat/{tgChatId}", tgChatId)
                 .retrieve().bodyToMono(String.class)
-                .block());
-        System.out.println("registered " + tgChatId);
-
-        // do post request with scrapperClient to localhost:8080/tg-chat/{tgChatId}
-        /*
-        try {
-            this.scrapperClient
-                    .post()
-                    .uri("/tg-chat/{tgChatId}", tgChatId)
-                    .retrieve().bodyToMono(String.class)
-                    .block();
-        } catch (Exception e) {
-
-         */
+                .block();
     }
 
     public void deleteTgChat(Long tgChatId) {
