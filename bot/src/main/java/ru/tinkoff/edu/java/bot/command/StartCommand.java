@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.tinkoff.edu.java.bot.client.ScrapperClient;
 import ru.tinkoff.edu.java.bot.model.User;
 import ru.tinkoff.edu.java.bot.dao.UserDao;
 
@@ -11,26 +12,22 @@ import ru.tinkoff.edu.java.bot.dao.UserDao;
 public class StartCommand extends Command {
 
     private UserDao userDao;
-    public StartCommand(UserDao userDao) {
+    private final ScrapperClient scrapperClient;
+    public StartCommand(ScrapperClient scrapperClient) {
         super("/start", "register");
-        this.userDao = userDao;
+        this.scrapperClient = scrapperClient;
     }
 
     @Override
     public SendMessage handle(Update update) {
         Message message = update.getMessage();
-        Long chatId = message.getChatId();
-        User user = userDao.findUserByChatId(chatId);
+        Long tgChatId = message.getChatId();
 
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(chatId);
+        sendMessage.setChatId(tgChatId);
 
-        if (user == null) {
-            sendMessage.setText("You have been successfully registered!");
-            userDao.addUser(chatId);
-        } else {
-            sendMessage.setText("Hello!");
-        }
+        scrapperClient.registerTgChat(tgChatId);
+        sendMessage.setText("Type /help for commands");
 
         return sendMessage;
     }

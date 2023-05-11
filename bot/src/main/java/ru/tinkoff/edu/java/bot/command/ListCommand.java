@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.tinkoff.edu.java.bot.client.ScrapperClient;
+import ru.tinkoff.edu.java.bot.client.dto.response.LinkResponse;
+import ru.tinkoff.edu.java.bot.client.dto.response.ListLinksResponse;
 import ru.tinkoff.edu.java.bot.model.User;
 import ru.tinkoff.edu.java.bot.dao.UserDao;
 
@@ -12,23 +15,26 @@ import java.util.List;
 @Component
 public class ListCommand extends Command {
 
-    private UserDao userDao;
+    private final ScrapperClient scrapperClient;
 
-    public ListCommand(UserDao userDao) {
+    public ListCommand(ScrapperClient scrapperClient) {
         super("/list", "list all of the tracked links");
-        this.userDao = userDao;
+        this.scrapperClient = scrapperClient;
     }
 
 
     @Override
     public SendMessage handle(Update update) {
         Message message = update.getMessage();
+
+        Long tgChatId = message.getChatId();
+
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(message.getChatId().toString());
+        sendMessage.setChatId(tgChatId);
 
-        User user = userDao.findUserByChatId(message.getChatId());
+        ListLinksResponse listLinksResponse = scrapperClient.listLinks(tgChatId);
 
-        List<String> links = user.getLinks();
+        List<LinkResponse> links = listLinksResponse.links();
 
         if (links.isEmpty()) {
             sendMessage.setText("Your tracking list is empty.\nPlease add some links with /track command.");
@@ -37,7 +43,7 @@ public class ListCommand extends Command {
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < links.size(); i++) {
-            stringBuilder.append(String.valueOf(i + 1) + ". " + links.get(i) + "\n");
+            stringBuilder.append(String.valueOf(i + 1) + ". " + links.get(i).url().toString() + "\n");
         }
 
         String str = stringBuilder.toString();

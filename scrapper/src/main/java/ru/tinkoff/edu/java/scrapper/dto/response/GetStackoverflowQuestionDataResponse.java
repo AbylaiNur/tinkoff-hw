@@ -1,12 +1,10 @@
-package ru.tinkoff.edu.java.scrapper.client.dto.response;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package ru.tinkoff.edu.java.scrapper.dto.response;
 
 import java.time.OffsetDateTime;
 
 // Создание класса для nested JSON https://stackoverflow.com/questions/58305852/nested-json-objects-from-spring-restclient-and-jackson
 
-public record GetStackoverflowQuestionsDataResponse(
+public record GetStackoverflowQuestionDataResponse(
         Boolean isAnswered,
         Integer viewCount,
         Integer answerCount,

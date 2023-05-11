@@ -15,6 +15,9 @@ public class ClientConfiguration {
     @Value("${base-url.github:https://api.github.com}")
     private String githubUrl;
 
+    @Value("${base-url.tg-bot:http://localhost:8081}")
+    private String tgBotUrl;
+
     @Bean("stackoverflowWebClient")
     public WebClient stackoverflowWebClient() {
         return WebClient.builder()
@@ -26,6 +29,13 @@ public class ClientConfiguration {
     public WebClient githubWebClient() {
         return WebClient.builder()
                 .baseUrl(githubUrl)
+                .build();
+    }
+
+    @Bean("tgBotWebClient")
+    public WebClient tgBotWebClient() {
+        return WebClient.builder()
+                .baseUrl(tgBotUrl)
                 .build();
     }
 }

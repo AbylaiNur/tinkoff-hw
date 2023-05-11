@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.edu.java.bot.command.*;
+import ru.tinkoff.edu.java.bot.component.ChatStates;
 import ru.tinkoff.edu.java.bot.model.User;
 import ru.tinkoff.edu.java.bot.dao.UserDao;
 
@@ -18,16 +19,17 @@ import java.util.Objects;
 @AllArgsConstructor
 public class UserMessageProcessor {
 
-    private UserDao userDao;
+//    private UserDao userDao;
     private List<Command> commands;
-
+    private ChatStates chatStates;
     public SendMessage handle(Update update) {
         Long chatId = update.getMessage().getChatId();
-        User user = userDao.findUserByChatId(chatId);
 
-        if (user != null && user.getBotLastActiveCommand() != null) {
+        String lastActiveCommand = chatStates.getLastActiveCommand(chatId);
+
+        if (lastActiveCommand != null) {
             for (Command command : commands) {
-                if (Objects.equals(command.getCommand(), user.getBotLastActiveCommand())) {
+                if (Objects.equals(command.getCommand(), lastActiveCommand)) {
                     return command.handle(update);
                 }
             }

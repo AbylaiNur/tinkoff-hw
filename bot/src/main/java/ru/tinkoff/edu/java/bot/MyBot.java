@@ -67,4 +67,15 @@ public class MyBot extends TelegramLongPollingBot {
             }
         }
     }
+
+    public void notifyUser(Long tgChatId, String url, String description) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(tgChatId);
+        sendMessage.setText(url + "\n" + description);
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
 }
