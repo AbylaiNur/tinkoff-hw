@@ -3,17 +3,13 @@ package ru.tinkoff.edu.java.scrapper.component.update.processor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.linkParser.parsers.GithubLinkParser;
-import ru.tinkoff.edu.java.linkParser.parsers.GlobalLinkParser;
 import ru.tinkoff.edu.java.scrapper.client.GithubClient;
 import ru.tinkoff.edu.java.scrapper.client.TgBotClient;
 import ru.tinkoff.edu.java.scrapper.dto.response.GetGithubRepositoryDataResponse;
 import ru.tinkoff.edu.java.scrapper.model.Chat;
 import ru.tinkoff.edu.java.scrapper.model.Link;
-import ru.tinkoff.edu.java.scrapper.repository.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcChatService;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.time.OffsetDateTime;
 import java.util.Map;
@@ -22,11 +18,11 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class GithubLinkUpdateProcessor extends UpdateProcessor {
+public class GithubLinkLinkUpdateProcessor extends LinkUpdateProcessor {
     private final GithubClient githubClient;
     private final TgBotClient tgBotClient;
-    private final JdbcChatService chatService;
-    private final JdbcLinkService linkService;
+    private final ChatService chatService;
+    private final LinkService linkService;
     private GithubLinkParser githubLinkParser = new GithubLinkParser();
     private String host = "github.com";
 

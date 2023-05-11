@@ -18,7 +18,7 @@ public class LinkRowMapper implements RowMapper<Link> {
     public Link mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Link()
                 .setId(rs.getLong("id"))
-                .setUrl(URI.create(rs.getString("url")))
+                .setUrl(rs.getString("url"))
                 .setLastChecked(rs.getTimestamp("last_checked").toInstant().atOffset(ZoneOffset.UTC))
                 .setLastUpdated(rs.getTimestamp("last_updated").toInstant().atOffset(ZoneOffset.UTC));
     }

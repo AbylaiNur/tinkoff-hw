@@ -15,7 +15,7 @@ public class TgBotClient {
 
     private final WebClient tgBotWebClient;
 
-    public void updates(Long id, URI url, String description, List<Long> tgChatIds) {
+    public void updates(Long id, String url, String description, List<Long> tgChatIds) {
         this.tgBotWebClient
                 .post()
                 .uri("/updates")

@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.repository;
+package ru.tinkoff.edu.java.scrapper;
 
 import liquibase.Contexts;
 import liquibase.LabelExpression;
@@ -19,8 +19,8 @@ import java.sql.DriverManager;
 
 public abstract class IntegrationEnvironment {
 
-    static PostgreSQLContainer POSTGRE_SQL_CONTAINER;
-    static Connection connection;
+    public static PostgreSQLContainer POSTGRE_SQL_CONTAINER;
+    public static Connection connection;
 
     static {
         POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:15")

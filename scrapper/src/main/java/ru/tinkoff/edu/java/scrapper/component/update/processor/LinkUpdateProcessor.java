@@ -4,7 +4,7 @@ import lombok.Getter;
 import ru.tinkoff.edu.java.scrapper.model.Link;
 
 @Getter
-public abstract class UpdateProcessor {
+public abstract class LinkUpdateProcessor {
     private String host;
     public abstract void process(Link link);
 }

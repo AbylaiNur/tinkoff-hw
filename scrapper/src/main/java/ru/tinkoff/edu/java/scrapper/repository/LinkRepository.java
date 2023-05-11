@@ -13,7 +13,7 @@ public interface LinkRepository {
     List<Link> findAll();
     boolean remove(Long id);
     boolean removeAll();
-    Link findByUrl(URI uri);
+    Link findByUrl(String url);
     List<Link> findAllBeforeTime(OffsetDateTime time);
     Long update(Link link);
 }

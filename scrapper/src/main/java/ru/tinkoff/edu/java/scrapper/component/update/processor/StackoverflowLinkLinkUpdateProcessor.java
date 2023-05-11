@@ -9,10 +9,8 @@ import ru.tinkoff.edu.java.scrapper.client.TgBotClient;
 import ru.tinkoff.edu.java.scrapper.dto.response.GetStackoverflowQuestionDataResponse;
 import ru.tinkoff.edu.java.scrapper.model.Chat;
 import ru.tinkoff.edu.java.scrapper.model.Link;
-import ru.tinkoff.edu.java.scrapper.repository.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcChatService;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
+import ru.tinkoff.edu.java.scrapper.service.ChatService;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.time.OffsetDateTime;
 import java.util.Map;
@@ -21,11 +19,11 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class StackoverflowLinkUpdateProcessor extends UpdateProcessor {
+public class StackoverflowLinkLinkUpdateProcessor extends LinkUpdateProcessor {
     private final StackoverflowClient stackoverflowClient;
     private final TgBotClient tgBotClient;
-    private final JdbcLinkService linkService;
-    private final JdbcChatService chatService;
+    private final LinkService linkService;
+    private final ChatService chatService;
     private StackoverflowLinkParser stackoverflowLinkParser = new StackoverflowLinkParser();
     private String host = "stackoverflow.com";
 
