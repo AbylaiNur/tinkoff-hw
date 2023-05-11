@@ -3,3 +3,4 @@ CREATE TABLE chat (
 );
 
 COMMENT ON COLUMN chat.id IS 'id телеграм чата';
+
