@@ -91,4 +91,10 @@ public class JpaLinkService implements LinkService {
 
         return linkRepository.save(linkToUpdate);
     }
+
+    @Transactional
+    @Override
+    public List<Link> findAll() {
+        return linkRepository.findAll();
+    }
 }

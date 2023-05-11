@@ -11,4 +11,5 @@ public interface LinkService {
     Link remove(long tgChatId, String url);
     List<Link> listAll(long tgChatId);
     Link update(Link link);
+    List<Link> findAll();
 }

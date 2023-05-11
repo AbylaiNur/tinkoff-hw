@@ -1,6 +1,5 @@
 package ru.tinkoff.edu.java.bot;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,12 +10,11 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.edu.java.bot.command.Command;
-import ru.tinkoff.edu.java.bot.command.ListCommand;
 import ru.tinkoff.edu.java.bot.dao.UserDao;
 import ru.tinkoff.edu.java.bot.model.User;
+import ru.tinkoff.edu.java.bot.service.UserMessageProcessor;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

@@ -1,21 +1,19 @@
-package ru.tinkoff.edu.java.bot;
+package ru.tinkoff.edu.java.bot.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.edu.java.bot.command.*;
 import ru.tinkoff.edu.java.bot.component.ChatStates;
-import ru.tinkoff.edu.java.bot.model.User;
-import ru.tinkoff.edu.java.bot.dao.UserDao;
 
 import java.util.List;
 import java.util.Objects;
 
 @Getter
-@Component
+@Service
 @AllArgsConstructor
 public class UserMessageProcessor {
 
