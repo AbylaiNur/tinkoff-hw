@@ -1,7 +1,5 @@
 package ru.tinkoff.edu.java.linkParser.validators;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 public class ValidLinkValidator extends Validator {

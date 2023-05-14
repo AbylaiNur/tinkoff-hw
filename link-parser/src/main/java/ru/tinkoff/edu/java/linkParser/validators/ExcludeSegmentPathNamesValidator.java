@@ -9,7 +9,11 @@ public class ExcludeSegmentPathNamesValidator extends Validator {
     private Integer segmentIndex;
     private List<String> invalidPathNames;
 
-    public ExcludeSegmentPathNamesValidator(String url, Integer segmentIndex, List<String> invalidPathNames) {
+    public ExcludeSegmentPathNamesValidator(
+        String url,
+        Integer segmentIndex,
+        List<String> invalidPathNames
+    ) {
         this.url = url;
         this.segmentIndex = segmentIndex;
         this.invalidPathNames = invalidPathNames;
@@ -17,7 +21,8 @@ public class ExcludeSegmentPathNamesValidator extends Validator {
 
     @Override
     public Boolean validate() {
-        if (invalidPathNames.contains(LinkHelper.getPathSegments(url).get(segmentIndex))) {
+        String segment = LinkHelper.getPathSegments(url).get(segmentIndex);
+        if (invalidPathNames.contains(segment)) {
             return false;
         }
         return validateNext();

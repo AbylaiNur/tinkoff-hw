@@ -7,7 +7,7 @@ public class ValidatorChainBuilder {
     public ValidatorChainBuilder(Validator first, Validator... chain) {
         Validator head = first;
         for (Validator nextInChain : chain) {
-            head.next = nextInChain;
+            head.setNext(nextInChain);
             head = nextInChain;
         }
         this.head = first;

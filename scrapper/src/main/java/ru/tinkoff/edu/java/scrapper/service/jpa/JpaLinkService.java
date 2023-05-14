@@ -27,7 +27,8 @@ public class JpaLinkService implements LinkService {
     public Link add(long tgChatId, String url) {
 
         chatRepository.findById(tgChatId).orElseThrow(
-                () -> new IllegalArgumentException("Chat with id " + tgChatId + " not found")
+                () -> new IllegalArgumentException(
+                    "Chat with id " + tgChatId + " not found")
         );
 
         Link link = linkRepository.findByUrl(url).orElseGet(
@@ -38,7 +39,8 @@ public class JpaLinkService implements LinkService {
                 new ChatLinkId()
                         .setChatId(tgChatId)
                         .setLinkId(link.getId())).orElseGet(
-                () -> chatLinkRepository.save(new ChatLink().setChatId(tgChatId).setLinkId(link.getId()))
+                () -> chatLinkRepository.save(
+                    new ChatLink().setChatId(tgChatId).setLinkId(link.getId()))
         );
 
         return link;
@@ -49,17 +51,24 @@ public class JpaLinkService implements LinkService {
     @Override
     public Link remove(long tgChatId, String url) {
         Chat chat = chatRepository.findById(tgChatId).orElseThrow(
-                () -> new IllegalArgumentException("Chat with id " + tgChatId + " not found")
+                () -> new IllegalArgumentException(
+                    "Chat with id " + tgChatId + " not found")
         );
 
         Link link = linkRepository.findByUrl(url).orElseThrow(
-                () -> new IllegalArgumentException("Link with url " + url + " not found")
+                () -> new IllegalArgumentException(
+                    "Link with url " + url + " not found")
         );
 
         ChatLink chatLink = chatLinkRepository.findById(
-                new ChatLinkId().setChatId(chat.getId()).setLinkId(link.getId())).orElseThrow(
-                () -> new IllegalArgumentException("ChatLink with chatId "
-                        + chat.getId() + " and linkId " + link.getId() + " not found")
+            new ChatLinkId()
+                .setChatId(chat.getId())
+                .setLinkId(link.getId()))
+            .orElseThrow(
+                () -> new IllegalArgumentException(
+                    "ChatLink with chatId "
+                        + chat.getId() + " and linkId "
+                        + link.getId() + " not found")
         );
 
         chatLinkRepository.delete(chatLink);
@@ -71,16 +80,21 @@ public class JpaLinkService implements LinkService {
     @Override
     public List<Link> listAll(long tgChatId) {
         Chat chat = chatRepository.findById(tgChatId).orElseThrow(
-                () -> new IllegalArgumentException("Chat with id " + tgChatId + " not found")
+                () -> new IllegalArgumentException(
+                    "Chat with id " + tgChatId + " not found")
         );
-        return chatLinkRepository.findAllByChatId(chat.getId()).stream().map(chatLink -> chatLink.getLink()).toList();
+        return chatLinkRepository.findAllByChatId(chat.getId())
+            .stream()
+            .map(chatLink -> chatLink.getLink())
+            .toList();
     }
 
     @Transactional
     @Override
     public Link update(Link link) {
         linkRepository.findById(link.getId()).orElseThrow(
-                () -> new IllegalArgumentException("Link with id " + link.getId() + " not found")
+                () -> new IllegalArgumentException(
+                    "Link with id " + link.getId() + " not found")
         );
 
         Link linkToUpdate = linkRepository.getOne(link.getId());

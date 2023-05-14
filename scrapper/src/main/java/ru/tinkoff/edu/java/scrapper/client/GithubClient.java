@@ -13,7 +13,9 @@ import ru.tinkoff.edu.java.scrapper.dto.response.GetGithubRepositoryDataResponse
 public class GithubClient {
     private final WebClient githubWebClient;
 
-    public GetGithubRepositoryDataResponse getGithubRepositoryData(String username, String repository) {
+    public GetGithubRepositoryDataResponse getGithubRepositoryData(
+        String username, String repository
+    ) {
         try {
             GithubApiRepositoryDTO data = this.githubWebClient
                     .get()
@@ -21,7 +23,8 @@ public class GithubClient {
                     .retrieve().bodyToMono(GithubApiRepositoryDTO.class)
                     .block();
 
-            GetGithubRepositoryDataResponse newData = new GetGithubRepositoryDataResponse(
+            GetGithubRepositoryDataResponse newData
+                = new GetGithubRepositoryDataResponse(
                     data.id(),
                     data.name(),
                     data.fullName(),

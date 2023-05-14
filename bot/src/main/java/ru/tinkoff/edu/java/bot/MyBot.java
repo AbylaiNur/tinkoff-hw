@@ -19,25 +19,32 @@ import java.util.List;
 @Component
 public class MyBot extends TelegramLongPollingBot {
 
-    private String telegramBotToken;
-    private UserMessageProcessor userMessageProcessor;
+    private final String telegramBotToken;
+    private final UserMessageProcessor userMessageProcessor;
 
 
-    public MyBot(String telegramBotToken, UserMessageProcessor userMessageProcessor) {
+    public MyBot(String telegramBotToken,
+                 UserMessageProcessor userMessageProcessor) {
         this.telegramBotToken = telegramBotToken;
         this.userMessageProcessor = userMessageProcessor;
-
         createCommandMenu();
     }
 
     public void createCommandMenu() {
         List<BotCommand> listOfCommands = new ArrayList<>();
         for (Command command : userMessageProcessor.getCommands()) {
-            listOfCommands.add(new BotCommand(command.getCommand(), command.getDescription()));
+            listOfCommands.add(
+                new BotCommand(command.getCommand(), command.getDescription())
+            );
         }
 
         try {
-            this.execute(new SetMyCommands(listOfCommands, new BotCommandScopeDefault(), null));
+            this.execute(
+                new SetMyCommands(
+                    listOfCommands,
+                    new BotCommandScopeDefault(),
+                    null)
+            );
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -55,10 +62,11 @@ public class MyBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage()){
+        if (update.hasMessage()) {
             Message message = update.getMessage();
-            if (message.hasText()){
-                SendMessage sendMessageResponse = userMessageProcessor.handle(update);
+            if (message.hasText()) {
+                SendMessage sendMessageResponse =
+                    userMessageProcessor.handle(update);
                 try {
                     execute(sendMessageResponse);
                 } catch (TelegramApiException e) {

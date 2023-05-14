@@ -6,16 +6,13 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.dto.row.LinkRowMapper;
-import ru.tinkoff.edu.java.scrapper.model.Chat;
 import ru.tinkoff.edu.java.scrapper.model.Link;
 import ru.tinkoff.edu.java.scrapper.repository.LinkRepository;
 
-import java.net.URI;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -29,12 +26,14 @@ public class JdbcLinkRepository implements LinkRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update((connection) -> {
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO link (url) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                "INSERT INTO link (url) VALUES (?)",
+                Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, link.getUrl());
             return ps;
         }, keyHolder);
 
-        return ((Number) keyHolder.getKeys().get("id")).longValue();
+        return ((Number) keyHolder.getKeys().get("id"))
+            .longValue();
     }
 
     @Override
@@ -55,7 +54,8 @@ public class JdbcLinkRepository implements LinkRepository {
 
     @Override
     public Link findByUrl(String uri) {
-        List<Link> links = jdbcTemplate.query("SELECT * FROM link WHERE url = ?",
+        List<Link> links = jdbcTemplate.query(
+            "SELECT * FROM link WHERE url = ?",
                 rowMapper,
                 uri.toString()
         );
@@ -70,7 +70,8 @@ public class JdbcLinkRepository implements LinkRepository {
     @Override
     public List<Link> findAllBeforeTime(OffsetDateTime time) {
         List<Link> links = jdbcTemplate.query(
-                "SELECT * FROM link WHERE last_checked < ? OR last_checked IS NULL",
+                "SELECT * FROM link "
+                    + "WHERE last_checked < ? OR last_checked IS NULL",
                 rowMapper,
                 Timestamp.from(time.toInstant())
         );
@@ -80,7 +81,9 @@ public class JdbcLinkRepository implements LinkRepository {
     @Override
     public Long update(Link link) {
         jdbcTemplate.update(
-                "UPDATE link SET last_updated = ?, last_checked = ? WHERE id = ?",
+                "UPDATE link "
+                    + "SET last_updated = ?, last_checked = ? "
+                    + "WHERE id = ?",
                 link.getLastUpdated(),
                 link.getLastChecked(),
                 link.getId()

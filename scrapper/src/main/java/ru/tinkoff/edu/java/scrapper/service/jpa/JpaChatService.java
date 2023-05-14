@@ -32,11 +32,18 @@ public class JpaChatService implements ChatService {
     public void unregister(long tgChatId) {
 
         chatRepository.findById(tgChatId).orElseThrow(
-                () -> new IllegalArgumentException("Chat with id " + tgChatId + " not found"));
+                () -> new IllegalArgumentException(
+                    "Chat with id " + tgChatId + " not found"));
 
-        List<Link> links = chatLinkRepository.findAllByChatId(tgChatId).stream().map(chatLink -> chatLink.getLink()).toList();
+        List<Link> links =
+            chatLinkRepository.findAllByChatId(tgChatId)
+                .stream()
+                .map(chatLink -> chatLink.getLink())
+                .toList();
 
-        links.forEach(link -> chatLinkRepository.deleteByChatIdAndLinkId(tgChatId, link.getId()));
+        links.forEach(link ->
+            chatLinkRepository
+                .deleteByChatIdAndLinkId(tgChatId, link.getId()));
 
         chatRepository.deleteById(tgChatId);
     }
@@ -47,6 +54,9 @@ public class JpaChatService implements ChatService {
         Link link = linkRepository.findByUrl(url).orElseThrow(
                 () -> new IllegalArgumentException("Link not found")
         );
-        return chatLinkRepository.findAllByLinkId(link.getId()).stream().map(chatLink -> chatLink.getChat()).toList();
+        return chatLinkRepository.findAllByLinkId(link.getId())
+            .stream()
+            .map(chatLink -> chatLink.getChat())
+            .toList();
     }
 }

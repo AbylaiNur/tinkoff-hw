@@ -8,7 +8,8 @@ import ru.tinkoff.edu.java.scrapper.service.sender.ClientLinkUpdateSender;
 import ru.tinkoff.edu.java.scrapper.service.sender.LinkUpdateSender;
 
 @Configuration
-@ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "false")
+@ConditionalOnProperty(
+    prefix = "app", name = "use-queue", havingValue = "false")
 public class ClientUseConfiguration {
     @Bean
     public LinkUpdateSender linkUpdateSender(TgBotClient tgBotClient) {

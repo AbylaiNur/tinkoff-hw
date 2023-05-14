@@ -9,7 +9,11 @@ public class IncludeSegmentPathNameValidator extends Validator {
     private Integer segmentIndex;
     private String validPathName;
 
-    public IncludeSegmentPathNameValidator(String url, Integer segmentIndex, String validPathName) {
+    public IncludeSegmentPathNameValidator(
+        String url,
+        Integer segmentIndex,
+        String validPathName
+    ) {
         this.url = url;
         this.segmentIndex = segmentIndex;
         this.validPathName = validPathName;
@@ -17,7 +21,9 @@ public class IncludeSegmentPathNameValidator extends Validator {
 
     @Override
     public Boolean validate() {
-        if (!Objects.equals(validPathName, LinkHelper.getPathSegments(url).get(segmentIndex))) {
+        String segment =
+            LinkHelper.getPathSegments(url).get(segmentIndex);
+        if (!Objects.equals(validPathName, segment)) {
             return false;
         }
         return validateNext();

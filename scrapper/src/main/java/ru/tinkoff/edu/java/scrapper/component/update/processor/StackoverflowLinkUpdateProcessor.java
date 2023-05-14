@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.component.update.processor;
 
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.linkParser.parsers.StackoverflowLinkParser;
 import ru.tinkoff.edu.java.scrapper.client.StackoverflowClient;
@@ -15,7 +14,6 @@ import ru.tinkoff.edu.java.scrapper.service.sender.LinkUpdateSender;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,7 +25,12 @@ public class StackoverflowLinkUpdateProcessor implements LinkUpdateProcessor {
     private final StackoverflowLinkParser stackoverflowLinkParser;
     private final String host;
 
-    public StackoverflowLinkUpdateProcessor(StackoverflowClient stackoverflowClient, LinkUpdateSender linkUpdateSender, LinkService linkService, ChatService chatService) {
+    public StackoverflowLinkUpdateProcessor(
+        StackoverflowClient stackoverflowClient,
+        LinkUpdateSender linkUpdateSender,
+        LinkService linkService,
+        ChatService chatService
+    ) {
         this.stackoverflowClient = stackoverflowClient;
         this.linkUpdateSender = linkUpdateSender;
         this.linkService = linkService;
@@ -37,11 +40,12 @@ public class StackoverflowLinkUpdateProcessor implements LinkUpdateProcessor {
     }
 
     public void process(Link link) {
-        Map<String, String> parsedLink = stackoverflowLinkParser.parse(link.getUrl().toString());
+        Map<String, String> parsedLink =
+            stackoverflowLinkParser.parse(link.getUrl().toString());
         String questionId = parsedLink.get("id");
         GetStackoverflowQuestionDataResponse questionData =
                 stackoverflowClient.getStackoverflowQuestionData(questionId);
-        if (!Objects.equals(questionData.lastActivityDate(), link.getLastUpdated())) {
+        if (!questionData.lastActivityDate().equals(link.getLastUpdated())) {
             link.setLastChecked(OffsetDateTime.now());
             link.setLastUpdated(questionData.lastActivityDate());
             linkService.update(link);
@@ -49,7 +53,10 @@ public class StackoverflowLinkUpdateProcessor implements LinkUpdateProcessor {
                     link.getId(),
                     link.getUrl(),
                     "updated",
-                    chatService.findAllByLink(link.getUrl()).stream().map(Chat::getId).collect(Collectors.toList()));
+                    chatService.findAllByLink(link.getUrl())
+                        .stream()
+                        .map(Chat::getId)
+                        .collect(Collectors.toList()));
         }
     }
 

@@ -11,7 +11,9 @@ import ru.tinkoff.edu.java.scrapper.service.sender.RabbitLinkUpdateSender;
 @ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "true")
 public class RabbitUseConfiguration {
     @Bean
-    public LinkUpdateSender linkUpdateSender(ScrapperQueueProducer scrapperQueueProducer) {
+    public LinkUpdateSender linkUpdateSender(
+        ScrapperQueueProducer scrapperQueueProducer
+    ) {
         return new RabbitLinkUpdateSender(scrapperQueueProducer);
     }
 }

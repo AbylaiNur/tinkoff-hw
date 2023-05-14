@@ -5,7 +5,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.tinkoff.edu.java.bot.client.ScrapperClient;
-import ru.tinkoff.edu.java.bot.model.User;
 import ru.tinkoff.edu.java.bot.dao.UserDao;
 
 @Component

@@ -1,9 +1,6 @@
 package ru.tinkoff.edu.java.linkParser.parsers;
 
 import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +21,21 @@ public class GlobalLinkParser {
     private static List<LinkParser> getAllParsers() {
         List<LinkParser> parsers = new ArrayList<>();
 
-        Reflections reflections = new Reflections("ru.tinkoff.edu.java.linkParser.parsers");
-        List<Class<? extends LinkParser>> list = reflections.getSubTypesOf(LinkParser.class)
+        Reflections reflections =
+            new Reflections("ru.tinkoff.edu.java.linkParser.parsers");
+
+        List<Class<? extends LinkParser>> list =
+            reflections.getSubTypesOf(LinkParser.class)
                 .stream()
                 .collect(Collectors.toList());
+
         for (Class<?> clazz : list) {
             try {
-                LinkParser parser = (LinkParser) clazz.getDeclaredConstructor().newInstance();
+                LinkParser parser =
+                    (LinkParser) clazz.getDeclaredConstructor().newInstance();
                 parsers.add(parser);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.out.println(list.getClass().getName() + " parser was skipped due to the error.");
+                e.printStackTrace();
             }
         }
 

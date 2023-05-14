@@ -8,7 +8,11 @@ public class IntegerSegmentPathValidator extends Validator {
     private Long minValue;
     private Long maxValue;
 
-    public IntegerSegmentPathValidator(String url, Integer segmentIndex, Long minValue, Long maxValue) {
+    public IntegerSegmentPathValidator(
+        String url,
+        Integer segmentIndex,
+        Long minValue, Long maxValue
+    ) {
         this.url = url;
         this.segmentIndex = segmentIndex;
         this.minValue = minValue;
@@ -25,7 +29,8 @@ public class IntegerSegmentPathValidator extends Validator {
     @Override
     public Boolean validate() {
         try {
-            String strNumber = LinkHelper.getPathSegments(url).get(segmentIndex);
+            String strNumber =
+                LinkHelper.getPathSegments(url).get(segmentIndex);
             Long number = Long.valueOf(strNumber);
             if (!(minValue <= number && number <= maxValue)) {
                 return false;

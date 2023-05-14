@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.tinkoff.edu.java.bot.command.*;
+import ru.tinkoff.edu.java.bot.command.Command;
 import ru.tinkoff.edu.java.bot.component.ChatStates;
 
 import java.util.List;
@@ -16,8 +16,6 @@ import java.util.Objects;
 @Service
 @AllArgsConstructor
 public class UserMessageProcessor {
-
-//    private UserDao userDao;
     private List<Command> commands;
     private ChatStates chatStates;
     public SendMessage handle(Update update) {
