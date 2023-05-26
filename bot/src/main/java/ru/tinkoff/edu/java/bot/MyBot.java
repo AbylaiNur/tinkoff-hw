@@ -1,6 +1,8 @@
 package ru.tinkoff.edu.java.bot;
 
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
@@ -21,12 +23,17 @@ public class MyBot extends TelegramLongPollingBot {
 
     private final String telegramBotToken;
     private final UserMessageProcessor userMessageProcessor;
+    private final Counter counter;
 
 
     public MyBot(String telegramBotToken,
-                 UserMessageProcessor userMessageProcessor) {
+                 UserMessageProcessor userMessageProcessor,
+                 MeterRegistry meterRegistry) {
         this.telegramBotToken = telegramBotToken;
         this.userMessageProcessor = userMessageProcessor;
+        this.counter = Counter.builder("processed_messages")
+            .description("Number of processed messages")
+            .register(meterRegistry);
         createCommandMenu();
     }
 
@@ -69,6 +76,7 @@ public class MyBot extends TelegramLongPollingBot {
                     userMessageProcessor.handle(update);
                 try {
                     execute(sendMessageResponse);
+                    counter.increment();
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }

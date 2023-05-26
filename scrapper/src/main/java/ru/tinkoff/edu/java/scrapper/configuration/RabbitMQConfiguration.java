@@ -31,7 +31,7 @@ public class RabbitMQConfiguration {
     @Bean
     public Queue queue() {
         return QueueBuilder.durable(queueName)
-                .withArgument("x-dead-letter-exchange", exchangeName + ".dlx")
+                .withArgument("x-dead-letter-exchange", queueName + ".dlx")
                 .build();
     }
 
